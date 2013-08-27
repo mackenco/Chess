@@ -13,15 +13,21 @@ class Pawn < Piece
     move_distance = [row - target_r, col - target_c]
     free = true
 
-    magnitude = move_distance[0]
-    sign = -1 * (magnitude / magnitude.abs)
-    (magnitude).abs.times do |count|
-      distance = (count - 1) * sign
-      unless verify_move?(row, col + distance, target_r, target_c)
-        free = false
+    if can_take?(target_r, target_c)
+      dup_board[target_r, target_c] = self
+      dup_board[row, col] = nil
+      self.row = target_r
+      self.col = target_c
+    else
+      magnitude = move_distance[0]
+      sign = -1 * (magnitude / magnitude.abs)
+      (magnitude).abs.times do |count|
+        distance = (count - 1) * sign
+        unless verify_move?(row, col + distance, target_r, target_c)
+          free = false
+        end
+        move_vertical(sign, dup_board)
       end
-
-      move_vertical(sign, dup_board)
     end
 
     if free
@@ -32,6 +38,8 @@ class Pawn < Piece
   end
 
   def valid_move?(target_r, target_c)
+    return can_take?(target_r, target_c) if target_c != col
+
     if color == :black
       unless first_move?
         target_r == row + 1
@@ -44,6 +52,17 @@ class Pawn < Piece
       else
         target_r.between?(row - 1, row - 2)
       end
+    end
+  end
+
+  def can_take?(target_r, target_c)
+    return false if board[target_r, target_c].nil?
+
+    case color
+    when :black
+      target_r - row == 1 && (target_c - col).abs == 1 && board[target_r, target_c].color == :white
+    else
+      row - target_r == 1 && (col - target_c).abs == 1 && board[target_r, target_c].color == :black
     end
   end
 

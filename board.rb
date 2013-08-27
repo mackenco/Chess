@@ -15,7 +15,7 @@ class Board
     @board = Array.new(8) { Array.new(8) }
     self[6, 0] = Pawn.new(:white, 6, 0, self)
     self[6, 8] = Pawn.new(:white, 6, 8, self)
-    self[1, 1] = Pawn.new(:black, 1, 1, self)
+    self[5, 1] = Pawn.new(:black, 5, 1, self)
   end
 
   def [](row, col)
@@ -54,9 +54,9 @@ end
 
 game = Board.new
 game.display
-game[6, 0].make_move(4, 0)
+game[6, 0].make_move(5, 1)
 game.display
-game[4, 0].make_move(3, 0)
+game[5, 1].make_move(4, 2)
 game.display
 game[1, 1].make_move(2, 1)
 game.display
