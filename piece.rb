@@ -11,11 +11,14 @@ class Piece
   end
 
   def move(new_row, new_col)
-    if actual_move?(new_row, new_col) && move_valid?(new_row, new_col)
-      @board[new_row, new_col] = self
+    move_coordinates = move_valid(new_row, new_col)
+    if actual_move?(new_row, new_col) && move_coordinates
+      m_row, m_col = move_coordinates[0], move_coordinates[1]
+      @board[m_row, m_col] = self
       @board[row, col] = nil
-      self.row = new_row
-      self.col = new_col
+      self.row = m_row
+      self.col = m_col
+      puts "moved the piece"
     end
   end
 
@@ -26,10 +29,10 @@ class Piece
   def collision_check?(coords)
     coords.each do |coord|
       if board[coord[0], coord[1]]
-        return board[coord[0], coord[1]].color
+        return [board[coord[0], coord[1]].color, coord[0], coord[1]]
       end
     end
-    nil
+    [nil]
   end
 
 
@@ -43,17 +46,19 @@ class Rook < Piece
     super(color, row, col, board, label)
   end
 
-  def move_valid?(new_row, new_col)
+  def move_valid(new_row, new_col)
     if new_row == row || new_col == col
       built_collision = build_collision(new_row, new_col)
 
-      case collision_check?(built_collision)
+      collision = collision_check?(built_collision)
+
+      case collision[0]
       when nil
-        return true
+        return [new_row, new_col]
       when color
         return false
       else
-
+        return [collision[1],collision[2]]
       end
     end
     false
@@ -64,7 +69,7 @@ class Rook < Piece
 
     if new_col == col
       if new_row < row
-        (new_row..row).to_a.each do |r|
+        (new_row..row).to_a.reverse.each do |r|
           coll_arr << [r, col]
         end
       elsif row < new_row
@@ -74,7 +79,7 @@ class Rook < Piece
       end
     elsif new_row == row
       if new_col < col
-        (new_col..col).to_a.each do |c|
+        (new_col..col).to_a.reverse.each do |c|
           coll_arr << [row, c]
         end
       elsif col < new_col

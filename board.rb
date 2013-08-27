@@ -9,6 +9,7 @@ class Board
     @board = Array.new(8) { Array.new(8) }
     self[0, 0] = Rook.new(:white, 0, 0, self)
     self[0, 2] = Rook.new(:white, 0, 2, self)
+    self[4, 0] = Rook.new(:black, 4, 0, self)
     nil
   end
 
@@ -23,6 +24,7 @@ class Board
   end
 
   def display
+    puts ""
     header = 8
     board.each do |row|
       print "#{header} "
@@ -37,8 +39,13 @@ class Board
       header -= 1
     end
 
-    print "  a b c d e f g h"
+    print "  a b c d e f g h\n"
     nil
   end
 
 end
+
+game = Board.new
+game.display
+game[0, 0].move(1, 6)
+game.display
