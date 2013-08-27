@@ -7,9 +7,9 @@ class Board
 
   def initialize
     @board = Array.new(8) { Array.new(8) }
-    self[0, 0] = Bishop.new(:white, 0, 0, self)
-    self[0, 3] = Bishop.new(:white, 0, 0, self)
-    self[4, 4] = Bishop.new(:black, 4, 4, self)
+    self[0, 0] = Queen.new(:white, 0, 0, self)
+    self[0, 3] = Queen.new(:white, 0, 3, self)
+    self[4, 4] = Queen.new(:black, 4, 4, self)
   end
 
   def [](row, col)
