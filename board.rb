@@ -1,4 +1,10 @@
 require './piece.rb'
+require './rook.rb'
+require './queen.rb'
+require './king.rb'
+require './pawn.rb'
+require './knight.rb'
+require './bishop.rb'
 
 class Board
   #COLUMNS = [:a..:h]
@@ -7,9 +13,9 @@ class Board
 
   def initialize
     @board = Array.new(8) { Array.new(8) }
-    self[0, 0] = King.new(:white, 0, 0, self)
-    self[0, 3] = King.new(:white, 0, 3, self)
-    self[2, 1] = King.new(:black, 2, 1, self)
+    self[6, 0] = Pawn.new(:white, 6, 0, self)
+    self[6, 8] = Pawn.new(:white, 6, 8, self)
+    self[1, 1] = Pawn.new(:black, 1, 1, self)
   end
 
   def [](row, col)
@@ -48,9 +54,9 @@ end
 
 game = Board.new
 game.display
-game[0, 0].make_move(1, 1)
+game[6, 0].make_move(4, 0)
 game.display
-game[2, 1].make_move(2, 2)
+game[4, 0].make_move(3, 0)
 game.display
-game[0, 3].make_move(0, 2)
+game[1, 1].make_move(2, 1)
 game.display
