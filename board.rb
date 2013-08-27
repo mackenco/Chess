@@ -8,6 +8,8 @@ class Board
   def initialize
     @board = Array.new(8) { Array.new(8) }
     self[0, 0] = Rook.new(:white, 0, 0, self)
+    self[0, 2] = Rook.new(:white, 0, 2, self)
+    nil
   end
 
   def [](row, col)
@@ -36,6 +38,7 @@ class Board
     end
 
     print "  a b c d e f g h"
+    nil
   end
 
 end
