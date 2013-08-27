@@ -7,9 +7,9 @@ class Board
 
   def initialize
     @board = Array.new(8) { Array.new(8) }
-    self[0, 0] = Queen.new(:white, 0, 0, self)
-    self[0, 3] = Queen.new(:white, 0, 3, self)
-    self[4, 4] = Queen.new(:black, 4, 4, self)
+    self[0, 0] = Knight.new(:white, 0, 0, self)
+    self[0, 3] = Knight.new(:white, 0, 3, self)
+    self[2, 1] = Knight.new(:black, 2, 1, self)
   end
 
   def [](row, col)
@@ -48,7 +48,7 @@ end
 
 game = Board.new
 game.display
-game[0, 0].make_move(4, 4)
+game[0, 0].make_move(2, 1)
 game.display
-game[4, 4].make_move(1, 1)
+game[4, 4].make_move(3, 2)
 game.display
