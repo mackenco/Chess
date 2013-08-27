@@ -8,7 +8,6 @@ class Board
   def initialize
     @board = Array.new(8) { Array.new(8) }
     self[0, 0] = Rook.new(:white, 0, 0, self)
-    self[0, 2] = Rook.new(:white, 0, 2, self)
     self[4, 0] = Rook.new(:black, 4, 0, self)
   end
 
@@ -29,7 +28,7 @@ class Board
       print "#{header} "
       row.each do |piece|
         if piece
-          print "#{piece.label} "
+          print "#{piece.unicode} "
         else
           print "  "
         end
@@ -46,5 +45,7 @@ end
 
 game = Board.new
 game.display
-game[0, 0].move(1, 6)
+game[0, 0].make_move(0, 5)
+game.display
+game[4, 0].make_move(1, 0)
 game.display
