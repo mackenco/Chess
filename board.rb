@@ -8,6 +8,7 @@ class Board
   def initialize
     @board = Array.new(8) { Array.new(8) }
     self[0, 0] = Rook.new(:white, 0, 0, self)
+    self[0, 3] = Rook.new(:white, 0, 0, self)
     self[4, 0] = Rook.new(:black, 4, 0, self)
   end
 
@@ -20,6 +21,8 @@ class Board
     #self.board[(num - 8).abs][COLUMNS.index(let)] = value
     self.board[row][col] = value
   end
+
+
 
   def display
     puts ""
@@ -45,7 +48,7 @@ end
 
 game = Board.new
 game.display
-game[0, 0].make_move(0, 5)
+game[0, 0].make_move(4, 0)
 game.display
 game[4, 0].make_move(1, 0)
 game.display
