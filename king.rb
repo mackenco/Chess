@@ -9,11 +9,11 @@ class King < Piece
     dup_board = board.clone
     dup_board.board = deep_dup(dup_board.board)
 
-    move_distance = [row - target_r, col - target_c]
+    move_distance = [target_r - row, target_c - col]
     free = true
 
     if move_distance[0] == 0
-      sign = move_distance[1] * -1
+      sign = move_distance[1]
       unless verify_move?(row, col + sign, target_r, target_c)
         free = false
       end
@@ -27,8 +27,8 @@ class King < Piece
 
       move_vertical(sign, dup_board)
     else
-      sign_v = move_distance[0] * -1
-      sign_h = move_distance[1] * -1
+      sign_v = move_distance[0]
+      sign_h = move_distance[1]
       unless verify_move?(row + sign_v, col + sign_h, target_r, target_c)
         free = false
       end

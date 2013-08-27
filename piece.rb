@@ -34,11 +34,12 @@ class Piece
     temp_array
   end
 
-  def verify_move?(row, col, target_r, target_c)
-    return true if board[row, col].nil?
-    if row == target_r && col == target_c && board[row, col].color != color
-      return true
+  def verify_move?(cur_row, cur_col, target_r, target_c)
+    out = false
+    return true if board[cur_row, cur_col].nil?
+    if cur_row == target_r && cur_col == target_c #&& board[cur_row, cur_col].color != color
+      out = true
     end
-    false
+    out
   end
 end
