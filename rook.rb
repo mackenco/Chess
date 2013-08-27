@@ -1,9 +1,8 @@
 class Rook < Piece
 
   def initialize(color, row, col, board)
-    color == :black ? label = :R : label = :r
     color == :black ? @unicode = "\u265C" : @unicode = "\u2656"
-    super(color, row, col, board, label, unicode)
+    super(color, row, col, board, unicode)
   end
 
   def make_move(target_r, target_c)

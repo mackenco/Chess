@@ -49,19 +49,30 @@ class Board
 
 
   def display
+    shaded = true
     puts ""
     header = 8
     board.each do |row|
       print "#{header} "
       row.each do |piece|
         if piece
-          print "#{piece.unicode} "
+          if shaded
+            print "#{piece.unicode} ".colorize(:background => :light_white)
+          else
+            print "#{piece.unicode} "
+          end
         else
-          print "  "
+          if shaded
+            print "  ".colorize(:background => :light_white)
+          else
+            print "  "
+          end
         end
+        shaded = !shaded
       end
       print "\n"
       header -= 1
+      shaded = !shaded
     end
 
     print "  a b c d e f g h\n"

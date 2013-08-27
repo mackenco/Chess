@@ -6,6 +6,7 @@ require './pawn.rb'
 require './knight.rb'
 require './bishop.rb'
 require './board.rb'
+require 'colorize'
 
 class Game
 

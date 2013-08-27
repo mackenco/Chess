@@ -1,8 +1,7 @@
 class Queen < Piece
   def initialize(color, row, col, board)
-    color == :black ? label = :Q : label = :q
     color == :black ? @unicode = "\u265B" : @unicode = "\u2655"
-    super(color, row, col, board, label, unicode)
+    super(color, row, col, board, unicode)
   end
 
   def make_move(target_r, target_c)

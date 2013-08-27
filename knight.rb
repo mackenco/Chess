@@ -1,8 +1,7 @@
 class Knight < Piece
   def initialize(color, row, col, board)
-    color == :black ? label = :K : label = :k
     color == :black ? @unicode = "\u265E" : @unicode = "\u2658"
-    super(color, row, col, board, label, unicode)
+    super(color, row, col, board, unicode)
   end
 
   def make_move(target_r, target_c)

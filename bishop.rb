@@ -1,8 +1,7 @@
 class Bishop < Piece
   def initialize(color, row, col, board)
-    color == :black ? label = :B : label = :b
     color == :black ? @unicode = "\u265D" : @unicode = "\u2657"
-    super(color, row, col, board, label, unicode)
+    super(color, row, col, board, unicode)
   end
 
   def make_move(target_r, target_c)

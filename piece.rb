@@ -1,12 +1,11 @@
 class Piece
-  attr_accessor :color, :row, :col, :board, :label, :unicode
+  attr_accessor :color, :row, :col, :board, :unicode
 
-  def initialize(color, row, col, board, label, unicode)
+  def initialize(color, row, col, board, unicode)
     @color = color
     @row = row
     @col = col
     @board = board
-    @label = label
   end
 
   def move_horizontal(dir, board)
@@ -37,7 +36,7 @@ class Piece
   def verify_move?(cur_row, cur_col, target_r, target_c)
     out = false
     return true if board[cur_row, cur_col].nil?
-    if cur_row == target_r && cur_col == target_c #&& board[cur_row, cur_col].color != color
+    if cur_row == target_r && cur_col == target_c && board[cur_row, cur_col].color != color
       out = true
     end
     out
