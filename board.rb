@@ -7,9 +7,9 @@ class Board
 
   def initialize
     @board = Array.new(8) { Array.new(8) }
-    self[0, 0] = Rook.new(:white, 0, 0, self)
-    self[0, 3] = Rook.new(:white, 0, 0, self)
-    self[4, 0] = Rook.new(:black, 4, 0, self)
+    self[0, 0] = Bishop.new(:white, 0, 0, self)
+    self[0, 3] = Bishop.new(:white, 0, 0, self)
+    self[4, 4] = Bishop.new(:black, 4, 4, self)
   end
 
   def [](row, col)
@@ -48,7 +48,7 @@ end
 
 game = Board.new
 game.display
-game[0, 0].make_move(4, 0)
+game[0, 0].make_move(4, 4)
 game.display
-game[4, 0].make_move(1, 0)
+game[4, 4].make_move(1, 1)
 game.display
