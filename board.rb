@@ -10,7 +10,6 @@ class Board
     self[0, 0] = Rook.new(:white, 0, 0, self)
     self[0, 2] = Rook.new(:white, 0, 2, self)
     self[4, 0] = Rook.new(:black, 4, 0, self)
-    nil
   end
 
   def [](row, col)
