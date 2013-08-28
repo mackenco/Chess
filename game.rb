@@ -51,10 +51,10 @@ class HumanPlayer
       end_row = ROW.index(input[1][1])
       piece = @board[start_row, start_col]
 
-      if piece.color == color && piece.valid_move?(end_row, end_col)
+      if piece.color == color
         piece.make_move(end_row, end_col)
       else
-        raise ArgumentError.new("Invalid Move")
+        raise "That's not your piece!"
       end
     rescue
       puts "Please enter a valid move"

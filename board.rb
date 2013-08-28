@@ -23,8 +23,6 @@ class Board
     self[7, 6] = Knight.new(:white, 7, 6, self)
     self[0, 1] = Knight.new(:black, 0, 1, self)
     self[0, 6] = Knight.new(:black, 0, 6, self)
-
-
   end
 
   def [](row, col)
