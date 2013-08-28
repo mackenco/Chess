@@ -72,15 +72,15 @@ class Board
       row.each do |piece|
         if piece
           if shaded
-            print "#{piece.unicode} ".colorize(background: :light_white)
+            print " #{piece.unicode} ".colorize(background: :white)
           else
-            print "#{piece.unicode} "
+            print " #{piece.unicode} ".colorize(background: :red)
           end
         else
           if shaded
-            print "  ".colorize(background: :light_white)
+            print "   ".colorize(background: :white)
           else
-            print "  "
+            print "   ".colorize(background: :red)
           end
         end
         shaded = !shaded
