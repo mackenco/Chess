@@ -8,10 +8,11 @@ class Piece
     @board = board
   end
 
-  def move(target_r, target_c)
+  def move(target_r, target_c, check = false)
     board[target_r, target_c] = self
     board[row, col] = nil
     self.row, self.col = target_r, target_c
+    self.pawn_promote unless check
   end
 
 
@@ -30,13 +31,39 @@ class Piece
     end
   end
 
+  def pawn_promote
+    promote_r = (color == :black) ? 7 : 0
+    return unless (self.class == Pawn && self.row == promote_r)
+
+    puts "What would you like to promote to?"
+    puts "(Q, R, B, K)"
+    begin
+      input = gets.chomp.upcase[0]
+      case input
+      when "Q"
+        board[row, col] = Queen.new(color, row, col, board)
+      when "R"
+        board[row, col] = Rook.new(color, row, col, board)
+      when "B"
+        board[row, col] = Bishop.new(color, row, col, board)
+      when "K"
+        board[row, col] = Knight.new(color, row, col, board)
+      else
+        raise "Input not valid"
+      end
+    rescue => error
+      puts error
+      retry
+    end
+  end
+
   def check_move(target_r, target_c)
     start_r, start_c = row, col
     piece = board[target_r, target_c]
 
-    self.move(target_r, target_c)
+    self.move(target_r, target_c, true)
     makes_check = board.king_in_check?(color)
-    self.move(start_r, start_c)
+    self.move(start_r, start_c, true)
 
     board[target_r, target_c] = piece
 

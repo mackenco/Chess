@@ -5,24 +5,24 @@ class Board
   def initialize
     @board = Array.new(8) { Array.new(8) }
 
-    @board[6].each_index { |i| self[6, i] = Pawn.new(:white, 6, i, self) }
-    @board[1].each_index { |i| self[1, i] = Pawn.new(:black, 1, i, self) }
+    @board[6].each_index { |i| self[6, i] = Pawn.new(:black, 6, i, self) }
+    @board[1].each_index { |i| self[1, i] = Pawn.new(:white, 1, i, self) }
 
     arr = [[:white, 7], [:black, 0]]
 
-    arr.each do |i|
-      color = i[0]
-      r = i[1]
-      self[r, 0] = Rook.new(color, r, 0, self)
-      self[r, 7] = Rook.new(color, r, 7, self)
-      self[r, 2] = Bishop.new(color, r, 2, self)
-      self[r, 5] = Bishop.new(color, r, 5, self)
-      self[r, 3] = Queen.new(color, r, 3, self)
-      self[r, 4] = King.new(color, r, 4, self)
-      self[r, 1] = Knight.new(color, r, 1, self)
-      self[r, 6] = Knight.new(color, r, 6, self)
-    end
-    @bk, @wk = self[0, 4], self[7, 4]
+     arr.each do |i|
+       color = i[0]
+       r = i[1]
+       self[r, 0] = Rook.new(color, r, 0, self)
+       self[r, 7] = Rook.new(color, r, 7, self)
+       self[r, 2] = Bishop.new(color, r, 2, self)
+       self[r, 5] = Bishop.new(color, r, 5, self)
+       self[r, 3] = Queen.new(color, r, 3, self)
+       self[r, 4] = King.new(color, r, 4, self)
+       self[r, 1] = Knight.new(color, r, 1, self)
+       self[r, 6] = Knight.new(color, r, 6, self)
+     end
+     @bk, @wk = self[0, 4], self[7, 4]
 
   end
 
@@ -90,7 +90,7 @@ class Board
       shaded = !shaded
     end
 
-    print "  a b c d e f g h\n"
+    print "   a  b  c  d  e  f  g  h\n"
   end
 
 end
