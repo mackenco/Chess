@@ -9,6 +9,7 @@ require './bishop.rb'
 require './board.rb'
 require './humanplayer'
 require 'colorize'
+require 'yaml'
 
 class Game
 
@@ -16,13 +17,13 @@ class Game
 
   def initialize
     @board = Board.new
-    @player1 = HumanPlayer.new(:white, @board)
-    @player2 = HumanPlayer.new(:black, @board)
+    @player1 = HumanPlayer.new(:white, @board, self)
+    @player2 = HumanPlayer.new(:black, @board, self)
   end
 
   def play
 
-   loop do
+    loop do
       board.display
       if board.king_in_checkmate?(:white)
         puts "White: you lose"
@@ -41,6 +42,21 @@ class Game
       player1.in_check = board.king_in_check?(:white)
     end
   end
+
+  def save
+    File.open('chess_save.txt', 'w') { |file| file.puts self.to_yaml }
+    raise "File saved"
+  end
 end
 
-Game.new.play
+puts "New game or load a saved game?"
+input = gets.chomp.downcase[0]
+if input == "l"
+  file = File.read("chess_save.txt")
+  game = YAML::load(file)
+else
+  puts "Starting a new game"
+  game = Game.new
+end
+
+game.play

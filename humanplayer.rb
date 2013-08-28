@@ -2,12 +2,13 @@ class HumanPlayer
   COLUMNS = %w(a b c d e f g h)
   ROWS = %w(8 7 6 5 4 3 2 1)
 
-  attr_accessor :color, :board, :in_check
+  attr_accessor :color, :board, :in_check, :game
 
-  def initialize(color, board)
+  def initialize(color, board, game)
     @color = color
     @board = board
     @in_check = false
+    @game = game
   end
 
   def take_turn
@@ -16,7 +17,9 @@ class HumanPlayer
       puts "(You're in check.)" if in_check
       input = gets.chomp.split(", ")
 
-      if input[0].downcase == "castle"
+      if input[0].downcase == "save"
+        game.save
+      elsif input[0].downcase == "castle"
         raise "You can't castle out of check" if @in_check
         castle(input[1].downcase[0])
       else
