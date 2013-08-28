@@ -14,11 +14,13 @@ class Knight < Piece
     KNIGHT_MOVES.each do |move|
       new_r = move[0] + row
       new_c = move[1] + col
+
       next if next_arr.include?(new_r) || next_arr.include?(new_c)
       next unless board[new_r, new_c].nil? || board[new_r, new_c].color != color
 
       moves_arr << [new_r, new_c]
     end
+
     moves_arr
   end
 end
