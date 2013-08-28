@@ -5,8 +5,8 @@ class Board
   def initialize
     @board = Array.new(8) { Array.new(8) }
 
-    #@board[6].each_index { |i| self[6, i] = Pawn.new(:white, 6, i, self) }
-    #@board[1].each_index { |i| self[1, i] = Pawn.new(:black, 1, i, self) }
+    @board[6].each_index { |i| self[6, i] = Pawn.new(:white, 6, i, self) }
+    @board[1].each_index { |i| self[1, i] = Pawn.new(:black, 1, i, self) }
     self[7, 0] = Rook.new(:white, 7, 0, self)
     self[7, 7] = Rook.new(:white, 7, 7, self)
     self[0, 0] = Rook.new(:black, 0, 0, self)
@@ -47,6 +47,21 @@ class Board
       end
     end
     check
+  end
+
+  def not_checkmate?(color)
+    can_move = false
+
+    board.each do |row|
+      row.each do |space|
+        next if space.nil?
+        next unless space.color == color
+        space.get_valid_moves.each do |move|
+          return true if space.make_move(move[0], move[1], true)
+        end
+      end
+    end
+    can_move
   end
 
   def display

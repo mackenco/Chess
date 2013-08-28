@@ -20,10 +20,19 @@ class Game
   end
 
   def play
-    while true
+   loop do
       board.display
+      unless board.not_checkmate?(:white)
+        puts "White: you lose"
+        break
+      end
       player1.take_turn
       player2.in_check = board.king_in_check?(:black)
+
+      unless board.not_checkmate?(:black)
+        puts "Black: you lose"
+        break
+      end
 
       board.display
       player2.take_turn
