@@ -39,10 +39,13 @@ class Piece
   def check_move(target_r, target_c)
     start_r = row
     start_c = col
+    piece = board[target_r, target_c]
 
     self.move(target_r, target_c)
     makes_check = board.king_in_check?(color)
     self.move(start_r, start_c)
+
+    board[target_r, target_c] = piece
 
     makes_check
   end
