@@ -15,21 +15,41 @@ class HumanPlayer
       puts "#{color.to_s.capitalize}, enter move:"
       puts "(You're in check.)" if in_check
       input = gets.chomp.split(", ")
-      input_check(input)
 
-      start_col = COLUMNS.index(input[0][0])
-      start_row = ROWS.index(input[0][1])
-      target_col = COLUMNS.index(input[1][0])
-      target_row = ROWS.index(input[1][1])
-
-      piece = @board[start_row, start_col]
-
-      raise "That's not your piece!" unless piece.color == color
-      piece.make_move(target_row, target_col)
+      if input[0].downcase == "castle"
+        raise "You can't castle out of check" if @in_check
+        castle(input[1].downcase[0])
+      else
+        normal_move(input)
+      end
 
     rescue => error
       puts error
       retry
+    end
+  end
+
+  def normal_move(input)
+
+    input_check(input)
+
+    start_col = COLUMNS.index(input[0][0])
+    start_row = ROWS.index(input[0][1])
+    target_col = COLUMNS.index(input[1][0])
+    target_row = ROWS.index(input[1][1])
+
+    piece = @board[start_row, start_col]
+
+    raise "That's not your piece!" unless piece.color == color
+    piece.make_move(target_row, target_col)
+  end
+
+  def castle(side)
+    case side
+    when "q"
+      board.castle(color, 2)
+    when "k"
+      board.castle(color, 6)
     end
   end
 

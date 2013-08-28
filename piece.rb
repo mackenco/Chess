@@ -1,11 +1,12 @@
 class Piece
-  attr_accessor :color, :row, :col, :board, :unicode
+  attr_accessor :color, :row, :col, :board, :unicode, :moved
 
   def initialize(color, row, col, board, unicode)
     @color = color
     @row = row
     @col = col
     @board = board
+    @moved = false
   end
 
   def move(target_r, target_c, check = false)
@@ -21,6 +22,7 @@ class Piece
       unless check_move(target_r, target_c)
         return true if cm_check
         self.move(target_r, target_c)
+        self.moved = true if self.class == King || Rook
       else
         return false if cm_check
         raise "That would put you in check."

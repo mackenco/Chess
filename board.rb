@@ -5,8 +5,8 @@ class Board
   def initialize
     @board = Array.new(8) { Array.new(8) }
 
-    @board[6].each_index { |i| self[6, i] = Pawn.new(:black, 6, i, self) }
-    @board[1].each_index { |i| self[1, i] = Pawn.new(:white, 1, i, self) }
+    @board[6].each_index { |i| self[6, i] = Pawn.new(:white, 6, i, self) }
+    @board[1].each_index { |i| self[1, i] = Pawn.new(:black, 1, i, self) }
 
     arr = [[:white, 7], [:black, 0]]
 
@@ -61,6 +61,50 @@ class Board
     end
 
     true
+  end
+
+  def castle(color, target_c)
+    target_r = (color == :black) ? 0 : 7
+    case target_c
+    when 2 then queenside(target_r)
+    when 6 then kingside(target_r)
+    else
+      raise "Not a valid castle"
+    end
+  end
+
+  def queenside(row)
+    raise "You already moved!" if self[row, 4].moved || self[row, 0].moved
+
+    king = (row == 0) ? @bk : @wk
+    rook = self[row, 0]
+
+    3.downto(1) do |c|
+      raise "Pieces in your way" unless self[row, c].nil?
+      raise "Can't castle through a check" if king.check_move(row, c)
+    end
+
+    self[row, 2] = king
+    self[row, 3] = rook
+    king.col, rook.col = 2, 3
+    self[row, 4], self[row, 0] = nil
+  end
+
+  def kingside(row)
+    raise "You already moved!" if self[row, 4].moved || self[row, 7].moved
+
+    king = (row == 0) ? @bk : @wk
+    rook = self[row, 7]
+
+    5.upto(6) do |c|
+      raise "Pieces in your way" unless self[row, c].nil?
+      raise "Can't castle through a check" if king.check_move(row, c)
+    end
+
+    self[row, 6] = king
+    self[row, 5] = rook
+    king.col, rook.col = 6, 5
+    self[row, 4], self[row, 7] = nil
   end
 
   def display
