@@ -23,8 +23,12 @@ class Game
     while true
       board.display
       player1.take_turn
+      player2.in_check = board.king_in_check?(:black)
+
       board.display
       player2.take_turn
+      player1.in_check = board.king_in_check?(:white)
+
     end
   end
 
@@ -34,22 +38,20 @@ class HumanPlayer
   COLUMNS = %w(a b c d e f g h)
   ROWS = %w(8 7 6 5 4 3 2 1)
 
-  attr_accessor :color, :board
+  attr_accessor :color, :board, :in_check
 
   def initialize(color, board)
     @color = color
     @board = board
+    @in_check = false
   end
 
   def take_turn
     begin
       puts "#{color.to_s.capitalize}, enter move:"
+      puts "(You're in check.)" if in_check
       input = gets.chomp.split(", ")
-      raise "Incorrect move format" unless input.count == 2
-      input.each do |inp|
-        raise "Incorrect move format" unless inp.length == 2
-        raise "Not a valid space" unless COLUMNS.include?(inp[0]) && ROWS.include?(inp[1])
-      end
+      input_check(input)
 
       start_col = COLUMNS.index(input[0][0])
       start_row = ROWS.index(input[0][1])
@@ -67,6 +69,15 @@ class HumanPlayer
       retry
     end
   end
+
+  def input_check(input)
+    raise "Incorrect move format" unless input.count == 2
+    input.each do |inp|
+      raise "Incorrect move format" unless inp.length == 2
+      raise "Not a valid space" unless COLUMNS.include?(inp[0]) && ROWS.include?(inp[1])
+    end
+  end
 end
+
 
 Game.new.play
