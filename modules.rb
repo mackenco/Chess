@@ -1,27 +1,20 @@
 module StraightMover
   def build_straight_moves
-    build_vertical_moves + build_horizontal_moves
+    vertical_moves(1) + vertical_moves(-1) + horizontal_moves(1) + horizontal_moves(-1)
   end
 
-  def build_vertical_moves
+  def vertical_moves(dir)
     moves_arr = []
+    break_arr = [-1,8]
+    i = dir
 
-    (row + 1).upto(7) do |i|
-      if board[i, col].nil?
-        moves_arr << [i, col]
-      elsif board[i, col].color != color
-        moves_arr << [i, col]
-        break
-      else
-        break
-      end
-    end
-
-    (row - 1).downto(0) do |i|
-      if board[i, col].nil?
-        moves_arr << [i, col]
-      elsif board[i, col].color != color
-        moves_arr << [i, col]
+    loop do
+      break if break_arr.include?(row + i)
+      if board[row + i, col].nil?
+        moves_arr << [row + i, col]
+        i += dir
+      elsif board[row + i, col].color != color
+        moves_arr << [row + i, col]
         break
       else
         break
@@ -31,51 +24,43 @@ module StraightMover
     moves_arr
   end
 
-
-  def build_horizontal_moves
+  def horizontal_moves(dir)
     moves_arr = []
+    break_arr = [-1,8]
+    i = dir
 
-    (col + 1).upto(7) do |i|
-      if board[row, i].nil?
-        moves_arr << [row, i]
-      elsif board[row, i].color != color
-        moves_arr << [row, i]
+    loop do
+      break if break_arr.include?(col + i)
+      if board[row, col + i].nil?
+        moves_arr << [row, col + i]
+        i += dir
+      elsif board[row, col + i].color != color
+        moves_arr << [row, col + i]
         break
       else
         break
       end
     end
 
-    (col - 1).downto(0) do |i|
-      if board[row, i].nil?
-        moves_arr << [row, i]
-      elsif board[row, i].color != color
-        moves_arr << [row, i]
-        break
-      else
-        break
-      end
-
-    end
     moves_arr
   end
 end
 
 module DiagonalMover
   def build_diagonal_moves
-    build_same_signs + build_diff_signs
+    same_signs(1) + same_signs(-1) + diff_signs(1) + diff_signs(-1)
   end
 
-  def build_same_signs
-    moves_arr = []
-    i = 1
+  def same_signs(dir)
     break_arr = [-1,8]
+    moves_arr = []
+    i = dir
 
     loop do
       break if break_arr.include?(row + i) || break_arr.include?(col + i)
       if board[row + i, col + i].nil?
         moves_arr << [row + i, col + i]
-        i += 1
+        i += dir
       elsif board[row + i, col + i].color != color
         moves_arr << [row + i, col + i]
         break
@@ -83,33 +68,19 @@ module DiagonalMover
         break
       end
     end
-
-    i = 1
-    loop do
-      break if break_arr.include?(row - i) || break_arr.include?(col - i)
-      if board[row - i, col - i].nil?
-        moves_arr << [row - i, col - i]
-        i += 1
-      elsif board[row - i, col - i].color != color
-        moves_arr << [row - i, col - i]
-        break
-      else
-        break
-      end
-    end
     moves_arr
   end
 
-  def build_diff_signs
-    moves_arr = []
-    i = 1
+  def diff_signs(dir)
     break_arr = [-1,8]
+    moves_arr = []
+    i = dir
 
     loop do
       break if break_arr.include?(row + i) || break_arr.include?(col - i)
       if board[row + i, col - i].nil?
         moves_arr << [row + i, col - i]
-        i += 1
+        i += dir
       elsif board[row + i, col - i].color != color
         moves_arr << [row + i, col - i]
         break
@@ -117,23 +88,6 @@ module DiagonalMover
         break
       end
     end
-
-    i = 1
-
-    loop do
-      break if break_arr.include?(row - i) || break_arr.include?(col + i)
-      if board[row - i, col + i].nil?
-        moves_arr << [row - i, col + i]
-        i += 1
-      elsif board[row - i, col + i].color != color
-        moves_arr << [row - i, col + i]
-        break
-      else
-        break
-      end
-    end
-
     moves_arr
   end
-
 end

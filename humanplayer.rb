@@ -19,13 +19,13 @@ class HumanPlayer
 
       start_col = COLUMNS.index(input[0][0])
       start_row = ROWS.index(input[0][1])
-      end_col = COLUMNS.index(input[1][0])
-      end_row = ROWS.index(input[1][1])
+      target_col = COLUMNS.index(input[1][0])
+      target_row = ROWS.index(input[1][1])
 
       piece = @board[start_row, start_col]
 
       raise "That's not your piece!" unless piece.color == color
-      piece.make_move(end_row, end_col)
+      piece.make_move(target_row, target_col)
 
     rescue => error
       puts error

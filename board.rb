@@ -7,24 +7,23 @@ class Board
 
     @board[6].each_index { |i| self[6, i] = Pawn.new(:white, 6, i, self) }
     @board[1].each_index { |i| self[1, i] = Pawn.new(:black, 1, i, self) }
-    self[7, 0] = Rook.new(:white, 7, 0, self)
-    self[7, 7] = Rook.new(:white, 7, 7, self)
-    self[0, 0] = Rook.new(:black, 0, 0, self)
-    self[0, 7] = Rook.new(:black, 0, 7, self)
-    self[7, 2] = Bishop.new(:white, 7, 2, self)
-    self[7, 5] = Bishop.new(:white, 7, 5, self)
-    self[0, 2] = Bishop.new(:black, 0, 2, self)
-    self[0, 5] = Bishop.new(:black, 0, 5, self)
-    self[7, 3] = Queen.new(:white, 7, 3, self)
-    self[0, 3] = Queen.new(:black, 0, 3, self)
-    @wk = King.new(:white, 7, 4, self)
-    @bk = King.new(:black, 0, 4, self)
-    self[0, 4] = @bk
-    self[7, 4] = @wk
-    self[7, 1] = Knight.new(:white, 7, 1, self)
-    self[7, 6] = Knight.new(:white, 7, 6, self)
-    self[0, 1] = Knight.new(:black, 0, 1, self)
-    self[0, 6] = Knight.new(:black, 0, 6, self)
+
+    arr = [[:white, 7], [:black, 0]]
+
+    arr.each do |i|
+      color = i[0]
+      r = i[1]
+      self[r, 0] = Rook.new(color, r, 0, self)
+      self[r, 7] = Rook.new(color, r, 7, self)
+      self[r, 2] = Bishop.new(color, r, 2, self)
+      self[r, 5] = Bishop.new(color, r, 5, self)
+      self[r, 3] = Queen.new(color, r, 3, self)
+      self[r, 4] = King.new(color, r, 4, self)
+      self[r, 1] = Knight.new(color, r, 1, self)
+      self[r, 6] = Knight.new(color, r, 6, self)
+    end
+    @bk, @wk = self[0, 4], self[7, 4]
+
   end
 
   def [](row, col)
@@ -46,22 +45,22 @@ class Board
         check = true if space.get_valid_moves.include?(king_pos)
       end
     end
+
     check
   end
 
-  def not_checkmate?(color)
-    can_move = false
-
+  def king_in_checkmate?(color)
     board.each do |row|
       row.each do |space|
         next if space.nil?
         next unless space.color == color
         space.get_valid_moves.each do |move|
-          return true if space.make_move(move[0], move[1], true)
+          return false if space.make_move(move[0], move[1], true)
         end
       end
     end
-    can_move
+
+    true
   end
 
   def display

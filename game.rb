@@ -24,14 +24,14 @@ class Game
 
    loop do
       board.display
-      unless board.not_checkmate?(:white)
+      if board.king_in_checkmate?(:white)
         puts "White: you lose"
         break
       end
       player1.take_turn
       player2.in_check = board.king_in_check?(:black)
 
-      unless board.not_checkmate?(:black)
+      if board.king_in_checkmate?(:black)
         puts "Black: you lose"
         break
       end
