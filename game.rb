@@ -13,33 +13,32 @@ require 'yaml'
 
 class Game
 
-  attr_accessor :board, :player1, :player2
+  attr_accessor :board, :player1, :player2, :players
 
   def initialize
     @board = Board.new
     @player1 = HumanPlayer.new(:white, @board, self)
     @player2 = HumanPlayer.new(:black, @board, self)
+    @players = { @player1 => :white, @player2 => :black }
   end
 
   def play
+    board.display
+    current_player = @player1
 
     loop do
-      board.display
-      if board.king_in_checkmate?(:white)
-        puts "White: you lose"
+      color = players[current_player]
+
+      current_player.in_check = board.king_in_check?(color)
+      if board.king_in_checkmate?(color)
+        puts "#{color}: you lose" if current_player.in_check
+        puts "Stalemate" unless current_player.in_check
         break
       end
-      player1.take_turn
-      player2.in_check = board.king_in_check?(:black)
-
-      if board.king_in_checkmate?(:black)
-        puts "Black: you lose"
-        break
-      end
-
+      current_player.take_turn
       board.display
-      player2.take_turn
-      player1.in_check = board.king_in_check?(:white)
+
+      current_player = (current_player == @player1) ? @player2 : @player1
     end
   end
 
