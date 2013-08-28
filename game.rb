@@ -56,8 +56,8 @@ class HumanPlayer
       else
         raise "That's not your piece!"
       end
-    rescue
-      puts "Please enter a valid move"
+    rescue => error
+      puts error
       retry
     end
   end

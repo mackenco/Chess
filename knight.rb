@@ -1,24 +1,24 @@
 class Knight < Piece
+  KNIGHT_MOVES = [[-2, 1], [2, 1], [2, -1], [-2, -1],
+                  [-1, 2], [1, 2], [1, -2], [-1, -2]]
+
   def initialize(color, row, col, board)
     color == :black ? @unicode = "\u265E" : @unicode = "\u2658"
     super(color, row, col, board, unicode)
   end
 
-  def make_move(target_r, target_c)
+  def get_valid_moves
+    next_arr = [-2, -1, 8, 9]
+    moves_arr = []
 
-    if @board[target_r, target_c].nil? || @board[target_r, target_c].color != color
-      board[target_r, target_c] = self
-      board[row, col] = nil
-      self.row = target_r
-      self.col = target_c
-    else
-      raise ArgumentError.new("Invalid Move")
+    KNIGHT_MOVES.each do |move|
+      new_r = move[0] + row
+      new_c = move[1] + col
+      next if next_arr.include?(new_r) || next_arr.include?(new_c)
+      next unless board[new_r, new_c].nil? || board[new_r, new_c].color != color
+
+      moves_arr << [new_r, new_c]
     end
-  end
-
-  def valid_move?(target_r, target_c)
-    two_and_one = (row - target_r).abs == 1 && (col - target_c).abs == 2
-    one_and_two = (row - target_r).abs == 2 && (col - target_c).abs == 1
-    two_and_one || one_and_two
+    moves_arr
   end
 end

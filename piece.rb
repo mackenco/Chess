@@ -15,11 +15,19 @@ class Piece
     self.col = target_c
   end
 
-  def deep_dup(arr)
-    temp_array = []
-    arr.each { |sub| temp_array << sub.dup }
-    temp_array
+  def make_move(target_r, target_c)
+    if get_valid_moves.include?([target_r, target_c])
+      self.move(target_r, target_c)
+    else
+      raise "That move's not possible!"
+    end
   end
+
+  # def deep_dup(arr)
+  #   temp_array = []
+  #   arr.each { |sub| temp_array << sub.dup }
+  #   temp_array
+  # end
 
   # def verify_move?(cur_row, cur_col, target_r, target_c)
   #   out = false
