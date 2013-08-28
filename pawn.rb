@@ -75,4 +75,9 @@ class Pawn < Piece
       row == 6
     end
   end
+
+  def verify_move?(cur_row, cur_col, target_r, target_c)
+    return true if board[cur_row, cur_col].nil?
+    false
+  end
 end
