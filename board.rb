@@ -5,8 +5,8 @@ class Board
   def initialize
     @board = Array.new(8) { Array.new(8) }
 
-    # @board[6].each_index { |i| self[6, i] = Pawn.new(:white, 6, i, self) }
-   #  @board[1].each_index { |i| self[1, i] = Pawn.new(:black, 1, i, self) }
+    @board[6].each_index { |i| self[6, i] = Pawn.new(:white, 6, i, self) }
+    @board[1].each_index { |i| self[1, i] = Pawn.new(:black, 1, i, self) }
     self[7, 0] = Rook.new(:white, 7, 0, self)
     self[7, 7] = Rook.new(:white, 7, 7, self)
     self[0, 0] = Rook.new(:black, 0, 0, self)
@@ -17,8 +17,8 @@ class Board
     self[0, 5] = Bishop.new(:black, 0, 5, self)
     self[7, 3] = Queen.new(:white, 7, 3, self)
     self[0, 3] = Queen.new(:black, 0, 3, self)
-    # self[7, 4] = King.new(:white, 7, 4, self)
-    # self[0, 4] = King.new(:black, 0, 4, self)
+    self[7, 4] = King.new(:white, 7, 4, self)
+    self[0, 4] = King.new(:black, 0, 4, self)
     self[7, 1] = Knight.new(:white, 7, 1, self)
     self[7, 6] = Knight.new(:white, 7, 6, self)
     self[0, 1] = Knight.new(:black, 0, 1, self)
@@ -32,8 +32,6 @@ class Board
   def []=(row, col, value)
     self.board[row][col] = value
   end
-
-
 
   def display
     shaded = true
