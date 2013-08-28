@@ -18,6 +18,7 @@ class King < Piece
       next unless board[new_r, new_c].nil? || board[new_r, new_c].color != color
       moves_arr << [new_r, new_c]
     end
+
     moves_arr
   end
 end

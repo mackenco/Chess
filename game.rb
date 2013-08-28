@@ -32,7 +32,7 @@ end
 
 class HumanPlayer
   COLUMNS = %w(a b c d e f g h)
-  ROW = %w(8 7 6 5 4 3 2 1)
+  ROWS = %w(8 7 6 5 4 3 2 1)
 
   attr_accessor :color, :board
 
@@ -45,10 +45,16 @@ class HumanPlayer
     begin
       puts "#{color.to_s.capitalize}, enter move:"
       input = gets.chomp.split(", ")
+      raise "Incorrect move format" unless input.count == 2
+      input.each do |inp|
+        raise "Incorrect move format" unless inp.length == 2
+        raise "Not a valid space" unless COLUMNS.include?(inp[0]) && ROWS.include?(inp[1])
+      end
+
       start_col = COLUMNS.index(input[0][0])
-      start_row = ROW.index(input[0][1])
+      start_row = ROWS.index(input[0][1])
       end_col = COLUMNS.index(input[1][0])
-      end_row = ROW.index(input[1][1])
+      end_row = ROWS.index(input[1][1])
       piece = @board[start_row, start_col]
 
       if piece.color == color
