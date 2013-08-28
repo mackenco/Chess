@@ -1,13 +1,4 @@
-require './piece.rb'
-require './rook.rb'
-require './queen.rb'
-require './king.rb'
-require './pawn.rb'
-require './knight.rb'
-require './bishop.rb'
-
 class Board
-  #COLUMNS = [:a..:h]
 
   attr_accessor :board
 
@@ -57,13 +48,13 @@ class Board
       row.each do |piece|
         if piece
           if shaded
-            print "#{piece.unicode} ".colorize(:background => :light_white)
+            print "#{piece.unicode} ".colorize(background: :light_white)
           else
             print "#{piece.unicode} "
           end
         else
           if shaded
-            print "  ".colorize(:background => :light_white)
+            print "  ".colorize(background: :light_white)
           else
             print "  "
           end

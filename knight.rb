@@ -5,8 +5,6 @@ class Knight < Piece
   end
 
   def make_move(target_r, target_c)
-    dup_board = board.clone
-    dup_board.board = deep_dup(dup_board.board)
 
     if @board[target_r, target_c].nil? || @board[target_r, target_c].color != color
       board[target_r, target_c] = self

@@ -1,4 +1,6 @@
 class Queen < Piece
+  include StraightMover
+
   def initialize(color, row, col, board)
     color == :black ? @unicode = "\u265B" : @unicode = "\u2655"
     super(color, row, col, board, unicode)

@@ -1,3 +1,4 @@
+require './modules.rb'
 require './piece.rb'
 require './rook.rb'
 require './queen.rb'
