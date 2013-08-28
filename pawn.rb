@@ -19,6 +19,7 @@ class Pawn < Piece
 
     moves_arr << [row + i, col] if board[row + i, col].nil?
     moves_arr << [row + (i * 2), col] if board[row + (i * 2), col].nil? && first_move
+
     unless board[row + i, col + 1].nil? || board[row + i, col + 1].color == color
       moves_arr << [row + i, col + 1]
     end

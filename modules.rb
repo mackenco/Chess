@@ -59,8 +59,6 @@ module StraightMover
     end
     moves_arr
   end
-
-
 end
 
 module DiagonalMover
