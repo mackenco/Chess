@@ -68,6 +68,8 @@ class Pawn < Piece
     end
   end
 
+  #trying git stuff
+
   def first_move?
     if color == :black
       row == 1
